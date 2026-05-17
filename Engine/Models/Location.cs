@@ -9,7 +9,10 @@ namespace Engine.Models
     public partial class Location : ObservableObject
     {
         [ObservableProperty]
-        public Vector2 position;
+        public int positionX;
+
+        [ObservableProperty]
+        public int positionY;
 
         [ObservableProperty]
         public string? name;

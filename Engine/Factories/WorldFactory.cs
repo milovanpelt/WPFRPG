@@ -13,8 +13,9 @@ namespace Engine.Factories
             World newWorld = new World();
 
             newWorld.AddLocation(new Location()
-            { 
-                Position = new Vector2(0, 0),
+            {
+                PositionX = 0,
+                PositionY = 0,
                 Name = "Cozy Home", 
                 Description = "This is your home", 
                 ImageName= "pack://application:,,,/Engine;component/Images/Locations/Home.png"
@@ -22,11 +23,12 @@ namespace Engine.Factories
 
             newWorld.AddLocation(new Location()
             {
-                Position = new Vector2(0, -1),
+                PositionX = 0, 
+                PositionY = -1,
                 Name = "Jungle",
                 Description = "This is the Jungle",
-                ImageName = ""
-            });
+                ImageName = "pack://application:,,,/Engine;component/Images/Locations/Home.png"
+            }); 
 
             return newWorld;
         }
