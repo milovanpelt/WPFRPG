@@ -4,12 +4,55 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPFUI.Controls"
+             xmlns:core="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <Thickness x:Key="ButtonMargin">10</Thickness>
+        <core:Double x:Key="ButtonWidth">65</core:Double>
+        <core:Double x:Key="ButtonHeight">25</core:Double>
+
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
+    </UserControl.Resources>
+
     <Grid Background="Lavender">
-        <Button HorizontalAlignment="Center" VerticalAlignment="Top" Content="North" Width="100" Height="40" Click="MoveNorth"/>
-        <Button HorizontalAlignment="Center" VerticalAlignment="Bottom" Content="South" Width="100" Height="40" Click="MoveSouth"/>
-        <Button HorizontalAlignment="Right" VerticalAlignment="Center" Content="East" Width="100" Height="40" Click="MoveEast"/>
-        <Button HorizontalAlignment="Left" VerticalAlignment="Center" Content="West" Width="100" Height="40" Click="MoveWest"/>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Button Grid.Row="0" Grid.Column="1"
+                Margin="{StaticResource ButtonMargin}" 
+                Width="{StaticResource ButtonWidth}" 
+                Height="{StaticResource ButtonHeight}" Click="OnClick_MoveNorth"
+                Visibility="{Binding HasLocationNorth, Converter={StaticResource BoolToVisibility}}"
+                Content="North"/>
+        <Button Grid.Row="2" Grid.Column="1"
+                Margin="{StaticResource ButtonMargin}" 
+                Width="{StaticResource ButtonWidth}" 
+                Height="{StaticResource ButtonHeight}" Click="OnClick_MoveSouth"
+                Visibility="{Binding HasLocationSouth, Converter={StaticResource BoolToVisibility}}"
+                Content="South"/>
+        <Button Grid.Row="1" Grid.Column="2"
+                Margin="{StaticResource ButtonMargin}" 
+                Width="{StaticResource ButtonWidth}" 
+                Height="{StaticResource ButtonHeight}" Click="OnClick_MoveEast"
+                Visibility="{Binding HasLocationEast, Converter={StaticResource BoolToVisibility}}"
+                Content="East"/>
+        <Button Grid.Row="1" Grid.Column="0"
+                Margin="{StaticResource ButtonMargin}"
+                Width="{StaticResource ButtonWidth}" 
+                Height="{StaticResource ButtonHeight}" Click="OnClick_MoveWest"
+                Visibility="{Binding HasLocationWest, Converter={StaticResource BoolToVisibility}}"
+                Content="West"/>
     </Grid>
 </UserControl>

@@ -1,18 +1,31 @@
-﻿using Engine.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Engine.Factories;
+using Engine.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics;
 using System.Numerics;
-using Engine.Factories;
+using System.Text;
 
 namespace Engine.ViewModels
 {
-    public class GameSession
+    public partial class GameSession : ObservableObject
     {
         public Player CurrentPlayer { get; set; }
-        public Location CurrentLocation { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(HasLocationNorth))]
+        [NotifyPropertyChangedFor(nameof(HasLocationSouth))]
+        [NotifyPropertyChangedFor(nameof(HasLocationEast))]
+        [NotifyPropertyChangedFor(nameof(HasLocationWest))]
+        private Location currentLocation;
 
         public World CurrentWorld { get; set; }
+
+        public bool HasLocationNorth => CurrentWorld.CanMoveInDirection(CurrentLocation, Direction.North);
+        public bool HasLocationSouth => CurrentWorld.CanMoveInDirection(CurrentLocation, Direction.South);
+        public bool HasLocationEast => CurrentWorld.CanMoveInDirection(CurrentLocation, Direction.East);
+        public bool HasLocationWest => CurrentWorld.CanMoveInDirection(CurrentLocation, Direction.West);
 
         public GameSession() 
         {
@@ -29,7 +42,19 @@ namespace Engine.ViewModels
             WorldFactory worldFactory = new WorldFactory();
             CurrentWorld = worldFactory.CreateWorld();
 
-            CurrentLocation = CurrentWorld.LocationAt(new Vector2(0, 0));
+            CurrentLocation = CurrentWorld.GetLocationAt(0, 0);
+        }
+
+        public void MovePlayer(Direction direction)
+        {
+            Debug.Assert(CurrentLocation != null, $"[{nameof(GameSession)}]: Current location is uninitialized");
+
+            Location nextLocation = CurrentWorld.GetNextLocation(currentLocation, direction);
+
+            if (nextLocation != null)
+            {
+                CurrentLocation = nextLocation;
+            }
         }
     }
 }

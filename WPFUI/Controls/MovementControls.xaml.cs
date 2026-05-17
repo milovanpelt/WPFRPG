@@ -26,40 +26,28 @@ namespace WPFUI.Controls
             InitializeComponent();
         }
 
-        private void MoveNorth(object sender, RoutedEventArgs e)
-        {
-            Vector2 UpDirection = new Vector2(0, 1);
-            MoveToLocation(UpDirection);
-        }
-
-        private void MoveSouth(object sender, RoutedEventArgs e)
-        {
-            Vector2 DownDirection = new Vector2(0, -1);
-            MoveToLocation(DownDirection);
-        }
-
-        private void MoveEast(object sender, RoutedEventArgs e)
-        {
-            Vector2 RightDirection = new Vector2(1, 0);
-            MoveToLocation(RightDirection);
-        }
-
-        private void MoveWest(object sender, RoutedEventArgs e)
-        {
-            Vector2 LeftDirection = new Vector2(-1, 0);
-            MoveToLocation(LeftDirection);
-        }
-
-        private void MoveToLocation(Vector2 location)
+        private void OnClick_MoveNorth(object sender, RoutedEventArgs e)
         {
             GameSession? _gameSession = this.DataContext as GameSession;
+            _gameSession?.MovePlayer(Direction.North);
+        }
 
-            Location? newLocation = _gameSession?.CurrentWorld.LocationAt(location);
+        private void OnClick_MoveSouth(object sender, RoutedEventArgs e)
+        {
+            GameSession? _gameSession = this.DataContext as GameSession;
+            _gameSession?.MovePlayer(Direction.South);
+        }
 
-            if (newLocation != null)
-            {
-                _gameSession?.CurrentLocation = newLocation;
-            }
+        private void OnClick_MoveEast(object sender, RoutedEventArgs e)
+        {
+            GameSession? _gameSession = this.DataContext as GameSession;
+            _gameSession?.MovePlayer(Direction.East);
+        }
+
+        private void OnClick_MoveWest(object sender, RoutedEventArgs e)
+        {
+            GameSession? _gameSession = this.DataContext as GameSession;
+            _gameSession?.MovePlayer(Direction.West);
         }
     }
 }
